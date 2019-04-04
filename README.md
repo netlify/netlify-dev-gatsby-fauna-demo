@@ -17,10 +17,20 @@ You will need the latest `netlify-cli` installed. (`npm i -g netlify-cli`)
 Clone this repo and then:
 
 ```
-yarn
-netlify init
-netlify addons:create fauna
-netlify dev:exec functions/functions/fauna-graphql/sync-schema.js
+## install dependencies at the root
+npm install
+
+## install dependencies inside the function
+cd functions/fauna-graphql
+npm install
+
+## Now you can set up with Netlify & Fauna DB!
+cd ... ## back to project root
+netlify init ## link to netlify site
+netlify addons:create fauna ## create fauna addon
+netlify dev:exec functions/functions/fauna-graphql/sync-schema.js ## upload GraphQL Schema
+
+## Big reveal!
 netlify dev ## or netlify dev --live
 ```
 
