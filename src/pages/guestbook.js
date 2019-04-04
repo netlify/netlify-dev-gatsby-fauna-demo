@@ -46,7 +46,6 @@ function List() {
     return <div>Error! {error.message}</div>
   }
 
-  console.log({ data })
   return (
     <div>
       {data.allComments.map(({ message, name }, i) => {
