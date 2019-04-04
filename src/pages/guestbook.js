@@ -28,17 +28,17 @@ const SecondPage = () => (
   </Layout>
 )
 
-const GET_DOGS = gql`
-  query sdlkjs {
-    allTodos {
-      completed
-      title
+const GET_COMMENTS = gql`
+  query getcomments {
+    allComments {
+      name
+      message
     }
   }
 `
 
 function List() {
-  const { data, error, loading } = useQuery(GET_DOGS)
+  const { data, error, loading } = useQuery(GET_COMMENTS)
   if (loading) {
     return <div>Loading...</div>
   }
@@ -46,29 +46,57 @@ function List() {
     return <div>Error! {error.message}</div>
   }
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>
+  console.log({ data })
+  return (
+    <div>
+      {data.allComments.map(({ message, name }, i) => {
+        return (
+          <blockquote key={i}>
+            {message}
+
+            <div style={{ textAlign: "right", fontStyle: "normal" }}>
+              <b>{name}</b>
+              {/* <button
+          style={{
+            border: 0,
+            cursor: "pointer",
+            background: "palegoldenrod",
+            borderRadius: 5,
+            margin: 10,
+          }}
+          onClick={handler}
+        >
+          x
+        </button> */}
+            </div>
+          </blockquote>
+        )
+      })}
+    </div>
+  )
 }
 
-const MAKETODO = gql`
-  mutation sdlkj($title: String!, $completed: Boolean!) {
-    createTodo(data: { title: $title, completed: $completed }) {
-      title
-      completed
+const MAKECOMMENT = gql`
+  mutation addComment($name: String!, $message: String!) {
+    createComment(data: { name: $name, message: $message }) {
+      name
     }
   }
 `
 const mutationOptions = {
-  refetchQueries: [{ query: GET_DOGS }],
+  refetchQueries: [{ query: GET_COMMENTS }],
   variables: {
-    title: "2222lkj2lkj2lkj",
-    completed: false,
+    name: "swyx",
+    message: "hello world " + Math.floor(Math.random() * 100),
   },
 }
 
 function ModifyUI() {
   return (
     <div>
-      <button onClick={useMutation(MAKETODO, mutationOptions)}>click me</button>
+      <button onClick={useMutation(MAKECOMMENT, mutationOptions)}>
+        click me
+      </button>
     </div>
   )
 }
