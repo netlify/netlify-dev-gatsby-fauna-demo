@@ -1,9 +1,8 @@
 type Comment {
-  name: String!
   message: String!
-  edited: Boolean
+  name: String!
 }
 type Query {
   allComments: [Comment!]
-  commentsByCompletedFlag(edited: Boolean!): [Comment!]
+  # commentssByCompletedFlag(completed: Boolean!): [Todo!]
 }
